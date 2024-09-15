@@ -11,7 +11,7 @@ timeVec = 0:samplIntrvl:sigLen ;
 
 %  Signal function
 
-sigVec = A * sin(2*pi*f0*timeVec+phi0);
+sigVec = sinsigfunc(timeVec,A,f0,phi0);
 
 %Plot of Signal in time domain
-plot(timeVec,sigVec,'-*')
+plot(timeVec,sigVec,'-')
