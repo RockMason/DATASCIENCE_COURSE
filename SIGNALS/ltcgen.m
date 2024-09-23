@@ -14,7 +14,7 @@ samplIntrvl = 0.001;
 timeVec = 0:samplIntrvl:sigLen;
 
 %Generate Signal
-sigVec = ltcfunc(timeVec,A,ta,[f0,f1],phi0,L);
+sigVec = ltcfunc(timeVec,A,ta,[f0,f1],phi0);
 
 %Plot Signal
 plot(timeVec,sigVec,'-')
