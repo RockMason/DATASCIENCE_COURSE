@@ -30,7 +30,7 @@ title('Sampled signal');
 %Plot the periodogram
 %--------------
 %Length of data 
-dataLen = timeVec(end)-timeVec(1);
+dataLen = timeVec   (end)-timeVec(1);
 %DFT sample corresponding to Nyquist frequency
 kNyq = floor(nSamples/2)+1;
 % Positive Fourier frequencies

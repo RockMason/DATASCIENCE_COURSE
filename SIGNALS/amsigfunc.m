@@ -3,5 +3,5 @@ function sigVec=amsigfunc(dataX,snr,amCoef,phi0)
 
 %Rock M. Mason, September 2024
 
-sigVec = cos(2*pi*amCoef(2)*dataX).*sin(amCoef(1)*dataX+phi0);
+sigVec = cos(2*pi*amCoef(2)*dataX).*sin(2*pi*amCoef(1)*dataX+phi0);
 sigVec = snr*sigVec/norm(sigVec);
