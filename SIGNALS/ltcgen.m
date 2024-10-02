@@ -3,19 +3,19 @@
 %Parameters
 A = 5;
 ta = 3;
-f0 = 3;
-f1 = 5;
-phi0 = 2;
-
+f0 = 100;
+f1 = 20;
+phi0 = 10;
+L=1;
 
 % Signal Duration and Sampling
-sigLen = 10;
+sigLen = 20;
 samplIntrvl = 0.01;
 timeVec = 0:samplIntrvl:sigLen;
-L = timeVec(301:401);
+L = (ta+L)/samplIntrvl;
 
 %Generate Signal
-sigVec = ltcfunc(L,A,ta,[f0,f1],phi0);
-
+sigVec = 0;
+sigVec(L) = ltcfunc(timeVec,A,ta,[f0,f1],phi0);
 %Plot Signal
 plot(timeVec,sigVec,'-')
