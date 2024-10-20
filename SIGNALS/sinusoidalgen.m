@@ -5,6 +5,7 @@ f0 = 244;
 A =20;
 
 % Signal Duration
+
 sigLen = 10;
 samplIntrvl = 0.01;
 timeVec = 0:samplIntrvl:sigLen ;
