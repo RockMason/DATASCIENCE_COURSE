@@ -52,39 +52,39 @@ filtSig1 = fftfilt(B1,sumVec);
 %Filter 2 (Returns Signal 3
 w2 =  (maxFreq2/2)/(sampFreq/2);
 B2 = fir1(filtOrder,w2 , "high") ;
-filtSig3 = fftfilt(B2,sigVec);
+filtSig3 = fftfilt(B2,sumVec);
 
 %Filter 3 (Returns signal 2)
 window = [w1,w2];
 B3 = fir1(filtOrder,window , "bandpass") ;
-filtSig2 = fftfilt(b,sigVec);
+filtSig2 = fftfilt(B3,sumVec);
     
 %%Plots
 
 %Unfiltered Signal
 figure
-plot(timeVec,sumVec,'-');
+plot(timeVec,sumVec);
 
 %Plot for filter 1 
 figure;
 hold on;
-plot(timeVec,sumVec,'-')
-plot(timeVec,filtSig1)
+plot(timeVec,sumVec);
+plot(timeVec,filtSig1);
 
 
 
 %Plot for Filter 2
 figure;
 hold on;
-plot(timeVec,sumVec,'-')
-plot(timeVec,filtSig3)
+plot(timeVec,sumVec);
+plot(timeVec,filtSig3);
 
 
 
 %Plot for Filter 3
 figure;
 hold on;
-plot(timeVec,sumVec,'-')
-plot(timeVec,filtSig2)
+plot(timeVec,sumVec);
+plot(timeVec,filtSig2);
 
 
