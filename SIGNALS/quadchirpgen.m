@@ -32,9 +32,9 @@ sigVec= qcsigfunc(timeVec,A,[a1,a2,a3]);
 
 
 %Plot of Signal in time domain
-plot(timeVec,sigVec,'-')c
-xlabel('Duration (s)')
-ylabel('Power')
+plot(timeVec,sigVec,'-');
+xlabel('Duration (s)');
+ylabel('Power');
 
 %Plot of the Periodogram
 dataLen = timeVec(end)-timeVec(1);

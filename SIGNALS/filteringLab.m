@@ -23,24 +23,24 @@ sigLen = (nSamples-1)/sampFreq;
 %%Create 3 sinusoidal signals and find their corrisponding maximum
 %%frequencies
 
-%For all signals, x(t)= Asin(2pi*f0*t+phi0)
-%phase: phi(t) = 2pi*f0*t+phi0
-% Instantaneous frequency:  1/(2*pi)*d(phi(t))/dt (normalized over 2*pi)
 
 %Signal 1
 sigVec1 = sinsigfunc(timeVec,A1,f01,phi01);
-maxFreq1 = 100 ;
+
 %Signal 2
 sigVec2 = sinsigfunc(timeVec,A2,f02,phi02);
-maxFreq2 = 200 ;
+
 %Signal 3
 sigVec3 = sinsigfunc(timeVec,A3,f03,phi03);
-maxFreq3 = 300 ;
+
 %Add signals
 sumVec = sigVec1+sigVec2+sigVec3; 
 
+maxFreq = instfreq(sumVec, sampFreq);
+maxFreq = maxFreq(1);
+
 %Unfiltered Signal
-figure
+    figure
 plot(timeVec,sumVec);
 
 
@@ -54,7 +54,7 @@ posFreq = (0:(kNyq-1))*(1/dataLen);
 
 %%Filter 1
 
-w1 = (maxFreq1/2)/(sampFreq/2);
+w1 = (2*maxFreq)/(sampFreq);
 B1 = fir1(filtOrder,w1,"low") ;
 filtSig1 = fftfilt(B1,sumVec); 
 %Plot of Filter1
@@ -68,7 +68,7 @@ ylabel('|FFT|');
 title('Periodogram of Signal 1');
 
 %%Filter 2 (Returns Signal 3)
-w2 =  (maxFreq2/2)/(sampFreq/2);
+w2 =  (4*maxFreq)/(sampFreq);
 B2 = fir1(filtOrder,w2 , "high") ;
 filtSig3 = fftfilt(B2,sumVec);
 %Plot for Filter 2
@@ -83,8 +83,8 @@ title('Periodogram of Signal 3');
 
 
 %%Filter 3 (Returns signal 2)
-window = [w1,w2];
-B3 = fir1(filtOrder,window , "bandpass") ;
+wn = [w1,w2];
+B3 = fir1(filtOrder,wn , "bandpass") ;
 filtSig2 = fftfilt(B3,sumVec);
 %Plot for Filter 3
 fftSig2 = fft(filtSig2);
