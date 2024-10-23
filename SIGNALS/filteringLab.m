@@ -39,52 +39,60 @@ maxFreq3 = 300 ;
 %Add signals
 sumVec = sigVec1+sigVec2+sigVec3; 
 
-
-
-%%Creating Filters (Returns Signal 1)
-filtOrder = 40; %Filter Order
-%Filter 1
-
-w1 = (maxFreq1/2)/(sampFreq/2);
-B1 = fir1(filtOrder,w1,"low") ;
-filtSig1 = fftfilt(B1,sumVec); 
-
-%Filter 2 (Returns Signal 3
-w2 =  (maxFreq2/2)/(sampFreq/2);
-B2 = fir1(filtOrder,w2 , "high") ;
-filtSig3 = fftfilt(B2,sumVec);
-
-%Filter 3 (Returns signal 2)
-window = [w1,w2];
-B3 = fir1(filtOrder,window , "bandpass") ;
-filtSig2 = fftfilt(B3,sumVec);
-    
-%%Plots
-
 %Unfiltered Signal
 figure
 plot(timeVec,sumVec);
 
-%Plot for filter 1 
+
+%%%Creating Filters (Returns Signal 1)
+filtOrder = 40; %Filter Order
+dataLen = timeVec(end)-timeVec(1);
+%dft sample
+kNyq=floor(nSamples/2)+1;
+%Identify positive frequencies
+posFreq = (0:(kNyq-1))*(1/dataLen);
+
+%%Filter 1
+
+w1 = (maxFreq1/2)/(sampFreq/2);
+B1 = fir1(filtOrder,w1,"low") ;
+filtSig1 = fftfilt(B1,sumVec); 
+%Plot of Filter1
+fftSig1 = fft(filtSig1);
+%Discarding Negative Frequencies
+fftSig1 = fftSig1(1:kNyq);
 figure;
-hold on;
-plot(timeVec,sumVec);
-plot(timeVec,filtSig1);
+plot(posFreq,abs(fftSig1));
+xlabel('Frequency (Hz)');
+ylabel('|FFT|');
+title('Periodogram of Signal 1');
 
-
-
+%%Filter 2 (Returns Signal 3)
+w2 =  (maxFreq2/2)/(sampFreq/2);
+B2 = fir1(filtOrder,w2 , "high") ;
+filtSig3 = fftfilt(B2,sumVec);
 %Plot for Filter 2
+fftSig3 = fft(filtSig3);
+%Discarding Negative Frequencies
+fftSig3 = fftSig3(1:kNyq);
 figure;
-hold on;
-plot(timeVec,sumVec);
-plot(timeVec,filtSig3);
+plot(posFreq,abs(fftSig3));
+xlabel('Frequency (Hz)');
+ylabel('|FFT|');
+title('Periodogram of Signal 3');
 
 
-
+%%Filter 3 (Returns signal 2)
+window = [w1,w2];
+B3 = fir1(filtOrder,window , "bandpass") ;
+filtSig2 = fftfilt(B3,sumVec);
 %Plot for Filter 3
+fftSig2 = fft(filtSig2);
+%Discarding Negative Frequencies
+fftSig2 = fftSig2(1:kNyq);
 figure;
-hold on;
-plot(timeVec,sumVec);
-plot(timeVec,filtSig2);
-
+plot(posFreq,abs(fftSig2));
+xlabel('Frequency (Hz)');
+ylabel('|FFT|');
+title('Periodogram of Signal 2');
 
