@@ -1,6 +1,6 @@
 %%RNG Lab
 close all;
-clear all;
+clear;
 
 
 n = 10000; %Number of Trials
