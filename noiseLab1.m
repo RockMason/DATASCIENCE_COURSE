@@ -64,3 +64,24 @@ wgn4 = sigma4.*randn(wgnSamp,1)+mu4;
 figure
 histogram(wgn4)
 stats4 = [mean(wgn4),std(wgn4)];
+
+%%Trivariate Normal Distribution
+%Linear combination of 3 uncorrelated Normal random variables
+rho = ; %correlation coefficient
+%Number of Trials
+ntrials = 10000;
+%Trial values of 3 uncorrelated Normal random variables
+X = randn(1,ntrials);
+Y = randn(1,ntrials);
+Z = randn(1,ntrials);
+I = X;
+
+
+
+%Scatterplot of Trials
+plot3(,,'.');
+axis tight;
+axis equal;
+xlabel('Trial values of I');
+ylabel('Trial Values of J');
+zlabel('Trial values of K');
