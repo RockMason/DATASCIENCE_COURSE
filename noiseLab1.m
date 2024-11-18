@@ -67,14 +67,20 @@ stats4 = [mean(wgn4),std(wgn4)];
 
 %%Trivariate Normal Distribution
 %Linear combination of 3 uncorrelated Normal random variables
-rho = ; %correlation coefficient
+
 %Number of Trials
 ntrials = 10000;
 %Trial values of 3 uncorrelated Normal random variables
 X = randn(1,ntrials);
 Y = randn(1,ntrials);
 Z = randn(1,ntrials);
-I = X;
+
+stdevX = std(X);
+stdevY = std(Y);
+stdevZ = std(Z);
+
+
+
 
 
 
