@@ -1,7 +1,7 @@
 %% Low pass filter demo
 addpath ../SIGNALS;
-sampFreq = 1024;
-nSamples = 2048;
+sampFreq = 1024; %Hz
+nSamples = 16384;
 
 timeVec = (0:(nSamples-1))/sampFreq;
 
