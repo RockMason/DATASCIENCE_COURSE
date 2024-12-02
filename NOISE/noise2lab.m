@@ -37,17 +37,22 @@ fltordr = 500;
 psdvec = psdEst;
 
 f = f/pi;
-wfilter = fir2(fltordr,f,sqrt(psdvec));
+wfilter = fir2(fltordr,f,1./sqrt(psdvec));
 
 outnoise = sqrt(sampFrq)*fftfilt(wfilter,dataFrq);
 
 [paff,faff] = pwelch(outnoise);
+figure
+plot(faff,paff)
 
 figure
 plot(timeVec,outnoise)
 title('Data Series after Whitening')
+xlabel('Time Series')
+ylabel('Power')
 figure
 spectrogram(outnoise)
 title('Spectrogram After Whitening')
 
-
+[s,f,t]=spectrogram(outnoise,128,[],[],1024);
+imagesc(t,f,abs(s)); axis xy; xlabel('time(sec)'); ylabel('Frequency (Hz)');
