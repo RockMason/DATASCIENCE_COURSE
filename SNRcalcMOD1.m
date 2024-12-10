@@ -9,6 +9,7 @@
 addpath SIGNALS\
 addpath NOISE\
 addpath DETEST\
+addpath DSP\
 
 %%
 % This is the target SNR for the LR
@@ -116,11 +117,12 @@ fftSig = fftSig(1:kNyq);
 figure;
 hold
 plot(posFreq,abs(fftSig));
-plot(posFreq,noiseVec)
+plot(posFreq,psdPosFreq)
 xlabel('Frequency (Hz)');
 ylabel('|FFT|');
 title('Periodogram');
-hold off
+
 %Spectrogram
 figure
-spectrogram(psdPosFreq)
+[s,f,t]=spectrogram(fftSig,8,[],[],1024);
+imagesc(t,f,abs(s)); axis xy; xlabel('time(sec)'); ylabel('Frequency (Hz)');

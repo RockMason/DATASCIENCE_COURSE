@@ -3,7 +3,8 @@
 % a given signal-to-noise ratio (SNR) in noise with a given Power Spectral 
 % Density (PSD). [We often shorten this statement to say: "Normalize the
 % signal to have a given SNR." ]
-
+clear
+close all
 %%
 % Path to folder containing signal and noise generation codes
 addpath ../SIGNALS

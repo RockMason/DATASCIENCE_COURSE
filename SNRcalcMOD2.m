@@ -3,7 +3,8 @@
 % a given signal-to-noise ratio (SNR) in noise with a given Power Spectral 
 % Density (PSD). [We often shorten this statement to say: "Normalize the
 % signal to have a given SNR." ]
-
+clear
+close all
 %%
 % Path to folder containing signal and noise generation codes
 addpath SIGNALS\
@@ -12,7 +13,7 @@ addpath DETEST\
 
 %%
 % This is the target SNR for the LR
-snr = 10;
+snr = 1;
 
 %%
 % Data generation parameters
@@ -31,24 +32,34 @@ A = 1;
 sigVec = qcsigfunc(timeVec,A,[a1,a2,a3]);
 
 %%
-% We will use the noise PSD used in colGaussNoiseDemo.m but add a constant
-% to remove the parts that are zero. (Exercise: Prove that if the noise PSD
-% is zero at some frequencies but the signal added to the noise is not,
-% then one can create a detection statistic with infinite SNR.)
-noisePSD = @(f) (f>=100 & f<=300).*(f-100).*(300-f)/10000 + 1;
+% Noise PSD provided by iLIGOSensitivity.txt
+data = load('iLIGOSensitivity.txt');
+LIGOfreq = data(:,1);
+LIGOPSDval = data(:,2);
+
 
 %%
 % Generate the PSD vector to be used in the normalization. Should be
 % generated for all positive DFT frequencies. 
+% Achiveed Via Interpolation of LIGO sensitivity values over the DFT values
 dataLen = nSamples/sampFreq;
 kNyq = floor(nSamples/2)+1;
 posFreq = (0:(kNyq-1))*(1/dataLen);
-psdPosFreq = noisePSD(posFreq);
+psdPosFreq = interp1(LIGOfreq, LIGOPSDval, posFreq, 'linear', 'extrap');
 figure;
-plot(posFreq,psdPosFreq);
-axis([0,posFreq(end),0,max(psdPosFreq)]);
+% Plot results
+figure;
+loglog(LIGOfreq, LIGOPSDval, 'o', 'DisplayName', 'Original PSD');
 xlabel('Frequency (Hz)');
-ylabel('PSD ((data unit)^2/Hz)');
+ylabel('PSD');
+title('Original PSD');
+grid on;
+figure
+loglog(posFreq, psdPosFreq, '-', 'DisplayName', 'Interpolated PSD');
+xlabel('Frequency (Hz)');
+ylabel('PSD');
+title('Interpolation of PSD to DFT Frequencies');
+grid on;
 
 %% Calculation of the norm
 % Norm of signal squared is inner product of signal with itself
@@ -89,20 +100,21 @@ title(['Estimated SNR = ',num2str(estSNR)]);
 %%
 % A noise realization
 figure;
-plot(timeVec,noiseVec);
+loglog(timeVec,noiseVec);
+title('Noise Realization')
 xlabel('Time (sec)');
 ylabel('Noise');
 %%
 % A data realization
 figure;
-plot(timeVec,dataVec);
+loglog(timeVec,dataVec);
 hold on;
-plot(timeVec,sigVec);
+loglog(timeVec,sigVec);
 xlabel('Time (sec)');
 ylabel('Data');
 %Periodogram
 figure
-periodogram(psdPosFreq)
+periodogram(psdPosFreq, [], [], sampFreq);
 %Spectrogram
 figure
-spectrogram(psdPosFreq)
+spectrogram(psdPosFreq, 256, 250, 256, sampFreq, 'yaxis');
