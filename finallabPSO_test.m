@@ -5,6 +5,7 @@ addpath GWDATA/
 addpath MDC/
 addpath NOISE/
 addpath SIGNALS/
+addpath ..\SDMBIGDAT19\CODES\
 clear
 close all
 % Data length
