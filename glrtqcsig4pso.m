@@ -30,20 +30,25 @@ for lpc = 1:nVecs
     if validPts(lpc)
     % Only the body of this block should be replaced for different fitness
     % functions
-        x = X(lpc,:).*(params.rmax - params.rmin) + params.rmin;
+    %SDM: 
+    %You did not follow crcbqcfitfunc properly: the function s2rv above
+    %already converts the standardized coordinates to real coordinates.
+        x = X(lpc,:);%.*(params.rmax - params.rmin) + params.rmin;
 
         % Generate the signal
-       phaseVec = x(1)*params.dataX + x(2)*params.dataX.^2 + x(3)*params.dataX.^3;
+        phaseVec = x(1)*params.dataX + x(2)*params.dataX.^2 + x(3)*params.dataX.^3;
         sigVec = sin(2*pi*phaseVec);
         sigVec = params.snr*sigVec/norm(sigVec);
         % Normalize signal for PSD
         [templateVec, ~] = normsig4psd(sigVec, params.sampFreq, params.psdPosFreq, 1);
-    
-    
+   
         % Compute the log-likelihood ratio
         llr = innerprodpsd(params.dataY, templateVec, params.sampFreq, params.psdPosFreq);
-
-        glrt(lpc) = llr^2;
+        
+        %SDM:
+        %Need to send the negative of llr because the PSO code minimizes,
+        %not maximize.
+        glrt(lpc) = -llr^2;
     end
 end
 

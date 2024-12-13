@@ -1,4 +1,10 @@
 %% Script OT test GLRT of a Quadratic Chirp Signal in colored noise using PSO
+addpath DETEST/
+addpath DSP/
+addpath GWDATA/
+addpath MDC/
+addpath NOISE/
+addpath SIGNALS/
 clear
 close all
 % Data length
@@ -28,7 +34,12 @@ psdPosFreq = noisePSD(posFreq);
 
 %Colored Noise Realization
 fltrOrder = 500;
-outnoise = statgaussnoisegen(nSamples,[posFreq(:),psdPosFreq(:)],fltrOrder,Fs);
+outnoise = statgaussnoisegen(nSamples*4,[posFreq(:),psdPosFreq(:)],fltrOrder,Fs);
+%SDM:
+%Filter order is very high and startup transient needs to be removed. So,
+%generate a long duration noise realization and drop the first fltrOrder
+%samples.
+outnoise = outnoise(fltrOrder:(fltrOrder+nSamples-1));
 
 sigVec = qcsigfunc(dataX,SNR,[a1,a2,a3]);
 [sigVec, ~] = normsig4psd(sigVec, Fs, psdPosFreq, 10);
