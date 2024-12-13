@@ -26,19 +26,6 @@ kNyq = floor(nSamples/2)+1;
 posFreq = (0:(kNyq-1))*(1/dataLen);
 psdPosFreq = noisePSD(posFreq); % Match size to DFT frequencies
 disp(size(psdPosFreq)); % Debug: Check if size matches expectations
-function glrt = glrtqcsig(dataVec, timeVec, sampFreq, psdvec, qcCoeff, A)
-    % Generate the signal
-    sigVec = qcsigfunc(timeVec, A, qcCoeff);
-
-    % Normalize signal for PSD
-    [templateVec, ~] = normsig4psd(sigVec, sampFreq, psdvec, 1);
-
-    % Compute the log-likelihood ratio
-    llr = innerprodpsd(dataVec, templateVec, sampFreq, psdvec);
-
-    % Compute GLRT
-    glrt = llr^2; % Ensure scalar output
-end
 
 % Generate GLRT values for the given data realizations
 glrtValues = zeros(1, 3);

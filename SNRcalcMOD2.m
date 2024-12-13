@@ -13,7 +13,7 @@ addpath DETEST\
 
 %%
 % This is the target SNR for the LR
-snr = 1;
+snr = 10;
 
 %%
 % Data generation parameters
@@ -29,7 +29,7 @@ a2=3;
 a3=3;
 % Amplitude value does not matter as it will be changed in the normalization
 A = 1; 
-sigVec = qcsigfunc(timeVec,A,[a1,a2,a3]);
+sigVec = qcsigfunc(timeVec,snr,[a1,a2,a3]);
 
 %%
 % Noise PSD provided by iLIGOSensitivity.txt

@@ -1,12 +1,13 @@
 %% Quadratic Chirp Signal Plot
 clear
 close all
+addpath ..\DATASCIENCE_COURSE\
 %Signal Parameters
 a1 = 10;
 a2 = 3;
 a3 = 10;
 A =10;
-
+P = struct('a1',a1, 'a2', a2, 'a3', a3);
 sigLen = 1;
 %Instantaneous Frequency after sigLen
 maxFreq = a1+2*a2*sigLen+3*a3*sigLen.^2;
@@ -27,7 +28,7 @@ nSamples = length(timeVec);
 
 
 %Signal Generation
-sigVec= qcsigfunc(timeVec,A,[a1,a2,a3]);
+sigVec= qcsigfuncNew(timeVec,A,P);
 
 
 

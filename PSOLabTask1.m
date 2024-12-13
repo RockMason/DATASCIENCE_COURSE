@@ -1,4 +1,8 @@
+clear
+close all
+%% Task 1
 %%Frequency Modulated Sinusoid
+addpath SIGNALS\
 %Signal Parameters
 A = 5;
 b = 4;
