@@ -15,9 +15,9 @@ Fs = 512;
 % Signal to noise ratio of the true signal
 SNR = 10;
 % Phase coefficients parameters of the true signal
-a1 = 10;
-a2 = 3;
-a3 = 3;
+a1 = 100;
+a2 = 8;
+a3 = 8;
 
 % Search range of phase coefficients
 rmin = [1, 1, 1];
